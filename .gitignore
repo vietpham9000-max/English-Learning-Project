@@ -1,0 +1,15 @@
+# Files/folders to ignore
+/vendor
+/node_modules
+.DS_Store
+
+# XAMPP/PHP specific
+.env
+config/*.php # Nếu file config chứa thông tin nhạy cảm
+
+# Database
+*.sqlite
+*.db
+
+# Example: If your database config file is named 'db_credentials.php'
+db_credentials.php

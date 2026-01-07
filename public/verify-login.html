@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Xác thực đăng nhập - Shadowing &amp; Dictation</title>
+
+  <!-- Tailwind build local (offline) -->
+  <link rel="stylesheet" href="/assets/css/output.css" />
+
+  <style>
+    :root { color-scheme: dark; }
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+        "Noto Sans", "Liberation Sans", sans-serif;
+    }
+  </style>
+</head>
+
+<body class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-x-hidden selection:bg-primary/30">
+
+  <!-- Background blobs -->
+  <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0b1220] via-[#101922] to-[#101922]"></div>
+
+    <div class="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[820px] h-[620px] bg-primary/10 blur-[140px] rounded-full mix-blend-screen"></div>
+    <div class="absolute bottom-[-12%] right-[-10%] w-[520px] h-[520px] bg-primary/5 blur-[120px] rounded-full mix-blend-screen"></div>
+
+    <!-- noise offline -->
+    <div class="absolute inset-0 opacity-[0.05]" style="
+      background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 14px 14px;
+    "></div>
+  </div>
+
+  <!-- Header -->
+  <header class="relative z-20 flex items-center justify-between border-b border-gray-200 dark:border-[#233648] px-6 py-4 lg:px-10 bg-white/50 dark:bg-[#111a22]/80 backdrop-blur-md">
+    <a href="/index.html" class="flex items-center gap-3">
+      <img
+        src="/assets/icons/chick.png"
+        alt="Happy Chicks"
+        class="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-contain select-none"
+        draggable="false"
+      />
+      <h2 class="text-lg font-bold leading-tight tracking-tight">
+        Shadowing <span class="text-blue-400">&amp;</span> Dictation
+      </h2>
+    </a>
+
+    <a href="#" class="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-primary transition-colors">
+      <span class="hidden sm:inline">Cần trợ giúp?</span>
+      <!-- icon ? offline -->
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.25c-.8.35-1.1.8-1.1 1.75v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </a>
+  </header>
+
+  <!-- Main -->
+  <main class="relative z-10 flex flex-1 flex-col items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+    <div class="w-full max-w-[480px] flex flex-col gap-6 rounded-2xl bg-white dark:bg-[#1a2632] border border-gray-200 dark:border-[#233648] shadow-xl p-8 sm:p-10">
+
+      <!-- Top icon + title -->
+      <div class="flex flex-col items-center text-center gap-4">
+        <div class="flex items-center justify-center size-16 rounded-full bg-primary/10 dark:bg-primary/20 ring-1 ring-primary/20 mb-2">
+          <!-- LOCK PNG (offline) -->
+          <img
+            src="/assets/icons/lock.png"
+            alt="Lock"
+            class="w-9 h-9 object-contain select-none"
+            draggable="false"
+          />
+        </div>
+
+        <div class="space-y-2">
+          <h1 class="text-2xl sm:text-[28px] font-bold tracking-tight">
+            Xác thực đăng nhập
+          </h1>
+          <p class="text-slate-500 dark:text-slate-400 text-base font-normal leading-relaxed max-w-[360px] mx-auto">
+            Để bảo mật tài khoản, vui lòng nhập mã xác thực 6 chữ số từ ứng dụng Google Authenticator hoặc SMS.
+          </p>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form id="verify-login-form" class="flex flex-col gap-6 mt-2" autocomplete="off">
+        <!-- Hidden input giữ nguyên ID để main.js của bạn vẫn dùng được -->
+        <input type="hidden" id="verify-login-code" maxlength="6" />
+
+        <!-- 6 OTP boxes -->
+        <div class="flex justify-center gap-2 sm:gap-3">
+          <fieldset class="contents" aria-label="Nhập mã OTP 6 số">
+            <!-- Mỗi ô 1 ký tự -->
+            <input data-otp autofocus inputmode="numeric" maxlength="1" type="text"
+              class="otp-box flex h-12 w-10 sm:h-14 sm:w-12 rounded-lg text-center
+                     bg-gray-50 dark:bg-[#111a22]
+                     border border-gray-200 dark:border-[#324d67]
+                     text-lg sm:text-xl font-medium
+                     focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none
+                     transition-all caret-primary text-slate-900 dark:text-white" />
+            <input data-otp inputmode="numeric" maxlength="1" type="text"
+              class="otp-box flex h-12 w-10 sm:h-14 sm:w-12 rounded-lg text-center
+                     bg-gray-50 dark:bg-[#111a22]
+                     border border-gray-200 dark:border-[#324d67]
+                     text-lg sm:text-xl font-medium
+                     focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none
+                     transition-all caret-primary text-slate-900 dark:text-white" />
+            <input data-otp inputmode="numeric" maxlength="1" type="text"
+              class="otp-box flex h-12 w-10 sm:h-14 sm:w-12 rounded-lg text-center
+                     bg-gray-50 dark:bg-[#111a22]
+                     border border-gray-200 dark:border-[#324d67]
+                     text-lg sm:text-xl font-medium
+                     focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none
+                     transition-all caret-primary text-slate-900 dark:text-white" />
+            <input data-otp inputmode="numeric" maxlength="1" type="text"
+              class="otp-box flex h-12 w-10 sm:h-14 sm:w-12 rounded-lg text-center
+                     bg-gray-50 dark:bg-[#111a22]
+                     border border-gray-200 dark:border-[#324d67]
+                     text-lg sm:text-xl font-medium
+                     focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none
+                     transition-all caret-primary text-slate-900 dark:text-white" />
+            <input data-otp inputmode="numeric" maxlength="1" type="text"
+              class="otp-box flex h-12 w-10 sm:h-14 sm:w-12 rounded-lg text-center
+                     bg-gray-50 dark:bg-[#111a22]
+                     border border-gray-200 dark:border-[#324d67]
+                     text-lg sm:text-xl font-medium
+                     focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none
+                     transition-all caret-primary text-slate-900 dark:text-white" />
+            <input data-otp inputmode="numeric" maxlength="1" type="text"
+              class="otp-box flex h-12 w-10 sm:h-14 sm:w-12 rounded-lg text-center
+                     bg-gray-50 dark:bg-[#111a22]
+                     border border-gray-200 dark:border-[#324d67]
+                     text-lg sm:text-xl font-medium
+                     focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none
+                     transition-all caret-primary text-slate-900 dark:text-white" />
+          </fieldset>
+        </div>
+
+        <!-- message -->
+        <p id="verify-login-message" class="min-h-[20px] text-sm text-rose-300 text-center"></p>
+
+        <button
+          type="submit"
+          class="flex w-full items-center justify-center overflow-hidden rounded-lg h-12 px-5
+                 bg-primary hover:bg-primary/90 text-white text-base font-bold leading-normal tracking-[0.015em]
+                 transition-all shadow-lg shadow-primary/25 active:scale-[0.98]"
+        >
+          <span class="truncate">Xác nhận</span>
+        </button>
+      </form>
+
+      <!-- Resend section -->
+      <div class="flex flex-col items-center gap-4 mt-2">
+        <div class="flex flex-col items-center gap-1">
+          <p class="text-slate-500 dark:text-slate-400 text-sm">Chưa nhận được mã?</p>
+
+          <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-[#111a22] border border-slate-200 dark:border-[#324d67]">
+            <!-- timer icon -->
+            <svg class="w-[18px] h-[18px] text-slate-400" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 8v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M9 2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+
+            <span id="resend-timer" class="text-sm font-medium text-slate-500 dark:text-slate-400 tabular-nums">00:59</span>
+            <div class="w-px h-3.5 bg-slate-300 dark:bg-slate-600 mx-1"></div>
+
+            <!-- giữ đúng ID để main.js của bạn vẫn bắt event -->
+            <button
+              id="btn-resend-login-code"
+              class="text-sm font-semibold text-slate-400 cursor-not-allowed transition-colors"
+              disabled
+              title="Vui lòng chờ hết thời gian"
+              type="button"
+            >
+              Gửi lại mã
+            </button>
+          </div>
+        </div>
+
+        <div class="w-full h-px bg-gray-100 dark:bg-[#233648]"></div>
+
+        <a href="/login.html" class="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">
+          <!-- back icon -->
+          <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Quay lại đăng nhập
+        </a>
+
+        <button type="button" class="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-primary transition-colors mt-1">
+          Thử phương thức xác thực khác
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="relative z-10 py-6 text-center">
+    <p class="text-xs text-slate-500 dark:text-slate-600">
+      © 2024 Shadowing &amp; Dictation. All rights reserved.
+    </p>
+  </footer>
+
+  <!-- OTP behavior (offline) -->
+  <script>
+    (function () {
+      const boxes = Array.from(document.querySelectorAll('[data-otp]'));
+      const hidden = document.getElementById('verify-login-code');
+
+      function onlyDigit(ch) { return /^[0-9]$/.test(ch); }
+
+      function syncHidden() {
+        if (!hidden) return;
+        hidden.value = boxes.map(b => (b.value || '')).join('').slice(0, 6);
+      }
+
+      boxes.forEach((box, idx) => {
+        box.addEventListener('input', (e) => {
+          // chỉ giữ 1 số
+          let v = (box.value || '').trim();
+          if (v.length > 1) v = v.slice(-1);
+          if (v && !onlyDigit(v)) v = '';
+          box.value = v;
+
+          syncHidden();
+
+          // auto next
+          if (v && idx < boxes.length - 1) boxes[idx + 1].focus();
+        });
+
+        box.addEventListener('keydown', (e) => {
+          const key = e.key;
+
+          if (key === 'Backspace') {
+            if (box.value) {
+              box.value = '';
+              syncHidden();
+              return;
+            }
+            if (idx > 0) {
+              boxes[idx - 1].focus();
+              boxes[idx - 1].value = '';
+              syncHidden();
+            }
+            return;
+          }
+
+          if (key === 'ArrowLeft' && idx > 0) boxes[idx - 1].focus();
+          if (key === 'ArrowRight' && idx < boxes.length - 1) boxes[idx + 1].focus();
+        });
+
+        // paste 6 số
+        box.addEventListener('paste', (e) => {
+          const text = (e.clipboardData || window.clipboardData).getData('text') || '';
+          const digits = text.replace(/\D/g, '').slice(0, 6);
+          if (!digits) return;
+
+          e.preventDefault();
+          digits.split('').forEach((d, i) => {
+            if (boxes[i]) boxes[i].value = d;
+          });
+          syncHidden();
+          const nextIndex = Math.min(digits.length, boxes.length - 1);
+          boxes[nextIndex].focus();
+        });
+      });
+
+      // countdown UI 60s (chỉ để giống ảnh mẫu; main.js bạn vẫn có thể xử lý resend thật)
+      const btnResend = document.getElementById('btn-resend-login-code');
+      const timerEl = document.getElementById('resend-timer');
+      let left = 59;
+
+      function render() {
+        if (!timerEl) return;
+        const mm = String(Math.floor(left / 60)).padStart(2, '0');
+        const ss = String(left % 60).padStart(2, '0');
+        timerEl.textContent = `${mm}:${ss}`;
+      }
+
+      render();
+      const t = setInterval(() => {
+        left--;
+        if (left <= 0) {
+          clearInterval(t);
+          if (timerEl) timerEl.textContent = '00:00';
+          if (btnResend) {
+            btnResend.disabled = false;
+            btnResend.classList.remove('cursor-not-allowed', 'text-slate-400');
+            btnResend.classList.add('text-primary');
+            btnResend.title = 'Gửi lại mã';
+          }
+          return;
+        }
+        render();
+      }, 1000);
+    })();
+  </script>
+
+  <!-- main.js (logic của bạn) -->
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

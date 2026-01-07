@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đăng ký - English Shadowing App</title>
+
+  <!-- Tailwind build local (offline) -->
+  <link rel="stylesheet" href="/assets/css/output.css" />
+
+  <!-- Font offline: system -->
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+        "Noto Sans", "Liberation Sans", sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-[#0f172a] text-white min-h-screen overflow-x-hidden">
+  <!-- BG blobs + noise (offline) -->
+  <div class="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0b1220] via-[#0b1220] to-[#0f172a]"></div>
+
+    <div class="absolute -top-[12%] -left-[10%] w-[520px] h-[520px] rounded-full bg-[#137fec]/18 blur-[120px] mix-blend-screen opacity-70"></div>
+    <div class="absolute top-[18%] right-[-6%] w-[420px] h-[420px] rounded-full bg-blue-600/18 blur-[120px] mix-blend-screen opacity-60"></div>
+    <div class="absolute -bottom-[18%] left-[18%] w-[640px] h-[640px] rounded-full bg-indigo-500/12 blur-[140px] mix-blend-screen opacity-55"></div>
+
+    <div class="absolute inset-0 opacity-[0.05]" style="
+      background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 14px 14px;
+    "></div>
+  </div>
+
+  <!-- Header -->
+  <header class="w-full border-b border-white/5 bg-[#0f172a]/70 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-[1200px] mx-auto px-6 py-3 flex items-center justify-between">
+      <a href="/index.html" class="text-xl font-bold leading-tight tracking-[-0.015em]">
+        Shadowing <span class="text-blue-400">&amp;</span> Dictation
+      </a>
+
+      <div class="flex items-center gap-2">
+        <a href="/index.html"
+           class="h-10 px-4 inline-flex items-center justify-center rounded-lg text-sm font-bold text-slate-200 hover:bg-white/5 transition">
+          Trang chủ
+        </a>
+        <a href="/login.html"
+           class="h-10 px-4 inline-flex items-center justify-center rounded-lg text-sm font-bold bg-[#233648] hover:bg-[#2d455d] transition">
+          Đăng nhập
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+      <!-- LEFT: REGISTER CARD -->
+      <section class="w-full max-w-[520px] lg:justify-self-start order-2 lg:order-1">
+        <div class="bg-[#1e293b]/50 border border-white/10 rounded-2xl p-6 sm:p-8 shadow-xl backdrop-blur-md">
+          <div class="mb-6">
+            <h2 class="text-2xl font-bold">Tạo tài khoản</h2>
+            <p class="text-sm text-[#92adc9] mt-1">Điền thông tin bên dưới để đăng ký.</p>
+          </div>
+
+          <form id="register-form" class="flex flex-col gap-4" autocomplete="off">
+            <!-- Name -->
+            <label class="flex flex-col gap-2">
+              <span class="text-sm font-medium">Tên người dùng</span>
+              <div class="flex items-stretch rounded-lg overflow-hidden border border-white/10 focus-within:ring-2 focus-within:ring-[#137fec]">
+                <input
+                  id="reg-name"
+                  type="text"
+                  placeholder="Nhập tên của bạn"
+                  required
+                  class="w-full h-12 px-4 bg-[#192633]/70 text-white placeholder:text-[#92adc9] outline-none"
+                />
+                <div class="w-12 grid place-items-center border-l border-white/10 text-[#92adc9] bg-[#192633]/70">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M20 21a8 8 0 0 0-16 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                </div>
+              </div>
+            </label>
+
+            <!-- Email -->
+            <label class="flex flex-col gap-2">
+              <span class="text-sm font-medium">Email</span>
+              <div class="flex items-stretch rounded-lg overflow-hidden border border-white/10 focus-within:ring-2 focus-within:ring-[#137fec]">
+                <input
+                  id="reg-email"
+                  type="email"
+                  placeholder="ten@gmail.com"
+                  required
+                  class="w-full h-12 px-4 bg-[#192633]/70 text-white placeholder:text-[#92adc9] outline-none"
+                />
+                <div class="w-12 grid place-items-center border-l border-white/10 text-[#92adc9] bg-[#192633]/70">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="2" />
+                    <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </label>
+
+            <!-- Passwords -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <label class="flex flex-col gap-2">
+                <span class="text-sm font-medium">Mật khẩu</span>
+                <div class="flex items-stretch rounded-lg overflow-hidden border border-white/10 focus-within:ring-2 focus-within:ring-[#137fec]">
+                  <input
+                    id="reg-password"
+                    type="password"
+                    placeholder="••••••••"
+                    required
+                    class="w-full h-12 px-4 bg-[#192633]/70 text-white placeholder:text-[#92adc9] outline-none"
+                  />
+                 <button
+  type="button"
+  data-toggle="reg-password"
+  data-eye
+  class="w-12 grid place-items-center border-l border-white/10 text-[#92adc9] bg-[#192633]/70 hover:text-[#137fec] transition"
+  aria-label="Hiện mật khẩu"
+  title="Hiện/Ẩn"
+>
+  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <!-- eye ON (mặc định) -->
+    <g data-eye-on>
+      <path d="M2.2 12s3.4-7 9.8-7 9.8 7 9.8 7-3.4 7-9.8 7S2.2 12 2.2 12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M12 15.2A3.2 3.2 0 1 0 12 8.8a3.2 3.2 0 0 0 0 6.4Z" stroke="currentColor" stroke-width="2"/>
+    </g>
+
+    <!-- eye OFF -->
+    <g data-eye-off class="hidden">
+      <path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M2.2 12s3.4-7 9.8-7c2 0 3.7.7 5.1 1.7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M21.8 12s-3.4 7-9.8 7c-2 0-3.7-.7-5.1-1.7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M9.9 9.9a3.2 3.2 0 0 0 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </svg>
+</button>
+
+                </div>
+              </label>
+
+              <label class="flex flex-col gap-2">
+                <span class="text-sm font-medium">Xác nhận</span>
+                <div class="flex items-stretch rounded-lg overflow-hidden border border-white/10 focus-within:ring-2 focus-within:ring-[#137fec]">
+                  <input
+                    id="reg-confirm-password"
+                    type="password"
+                    placeholder="••••••••"
+                    required
+                    class="w-full h-12 px-4 bg-[#192633]/70 text-white placeholder:text-[#92adc9] outline-none"
+                  />
+                <button
+  type="button"
+  data-toggle="reg-password"
+  data-eye
+  class="w-12 grid place-items-center border-l border-white/10 text-[#92adc9] bg-[#192633]/70 hover:text-[#137fec] transition"
+  aria-label="Hiện mật khẩu"
+  title="Hiện/Ẩn"
+>
+  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <!-- eye ON (mặc định) -->
+    <g data-eye-on>
+      <path d="M2.2 12s3.4-7 9.8-7 9.8 7 9.8 7-3.4 7-9.8 7S2.2 12 2.2 12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M12 15.2A3.2 3.2 0 1 0 12 8.8a3.2 3.2 0 0 0 0 6.4Z" stroke="currentColor" stroke-width="2"/>
+    </g>
+
+    <!-- eye OFF -->
+    <g data-eye-off class="hidden">
+      <path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M2.2 12s3.4-7 9.8-7c2 0 3.7.7 5.1 1.7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M21.8 12s-3.4 7-9.8 7c-2 0-3.7-.7-5.1-1.7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M9.9 9.9a3.2 3.2 0 0 0 4.2 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </svg>
+</button>
+
+                </div>
+              </label>
+            </div>
+
+            <!-- Terms -->
+            <div class="flex items-start gap-3 mt-1">
+              <input
+                id="reg-terms"
+                type="checkbox"
+                class="mt-1 w-4 h-4 rounded border-white/20 bg-white/5"
+                required
+              />
+              <label for="reg-terms" class="text-sm text-[#92adc9]">
+                Tôi đồng ý với <a class="text-[#137fec] hover:underline" href="#">Điều khoản sử dụng</a> và
+                <a class="text-[#137fec] hover:underline" href="#">Chính sách bảo mật</a>.
+              </label>
+            </div>
+
+            <!-- message -->
+            <p id="register-message" class="text-sm text-rose-300 min-h-[20px]"></p>
+
+            <!-- Submit -->
+            <button
+              type="submit"
+              class="mt-2 h-12 rounded-lg bg-[#137fec] hover:bg-[#137fec]/90
+                     font-bold shadow-lg shadow-[#137fec]/25 transition"
+            >
+              Đăng ký ngay
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="relative my-6">
+            <div class="h-px bg-white/10"></div>
+            <div class="absolute inset-0 -top-3 flex justify-center">
+              <span class="px-3 text-sm text-[#92adc9] bg-[#1e293b]/0">Hoặc tiếp tục với</span>
+            </div>
+          </div>
+
+          <!-- Social -->
+          <div class="grid grid-cols-2 gap-3">
+            <button
+              class="flex items-center justify-center gap-2 h-12 rounded-lg
+                     border border-gray-300 dark:border-[#324d67]
+                     bg-white dark:bg-[#192633]
+                     hover:bg-gray-50 dark:hover:bg-[#233648]
+                     transition-all text-slate-700 dark:text-white font-medium text-sm sm:text-base"
+              type="button"
+              id="btn-login-google"
+            >
+              <img
+                src="/images/google.png"
+                alt="Google"
+                class="w-5 h-5"
+                loading="lazy"
+                decoding="async"
+                draggable="false"
+              />
+              <span>Google</span>
+            </button>
+
+            <button
+              class="flex items-center justify-center gap-2 h-12 rounded-lg
+                     border border-gray-300 dark:border-[#324d67]
+                     bg-white dark:bg-[#192633]
+                     hover:bg-gray-50 dark:hover:bg-[#233648]
+                     transition-all text-slate-700 dark:text-white font-medium text-sm sm:text-base"
+              type="button"
+              id="btn-login-facebook"
+            >
+              <img
+                src="/images/facebook.png"
+                alt="Facebook"
+                class="w-5 h-5 rounded-full bg-white p-[2px]"
+                loading="lazy"
+                decoding="async"
+                draggable="false"
+              />
+              <span>Facebook</span>
+            </button>
+          </div>
+
+          <p class="mt-6 text-center text-sm text-[#92adc9]">
+            Bạn đã có tài khoản?
+            <a href="/login.html" class="font-bold text-[#137fec] hover:text-[#137fec]/80 transition">Đăng nhập</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- RIGHT: CONTENT -->
+      <section class="flex flex-col gap-6 order-1 lg:order-2">
+        <div class="space-y-4">
+          <h1 class="text-4xl lg:text-5xl font-black leading-tight tracking-[-0.03em]">
+            Bắt đầu hành trình <br />
+            <span class="text-[#137fec]">thành thạo tiếng Anh</span>
+          </h1>
+
+          <p class="text-[#92adc9] text-lg leading-relaxed max-w-[60ch]">
+            Tạo tài khoản miễn phí để luyện tập Shadowing &amp; Dictation với hàng ngàn bài học chất lượng cao ngay hôm nay.
+          </p>
+        </div>
+
+        <!-- Offline cover -->
+        <div class="w-full aspect-video rounded-2xl overflow-hidden shadow-2xl relative bg-[#233648]/70 border border-white/10">
+         <img
+  src="/images/register-hero.png"
+  alt="Register hero"
+  class="absolute inset-0 w-full h-full object-cover
+         opacity-95 saturate-[1.25] contrast-[2] brightness-[0.65]"
+  loading="lazy"
+  decoding="async"
+  draggable="false"
+/>
+          <div class="absolute inset-0 bg-gradient-to-tr from-[#137fec]/20 to-transparent"></div>
+
+          <div class="absolute bottom-4 left-4 right-4 p-4 bg-black/40 backdrop-blur-md rounded-xl border border-white/10">
+            <div class="flex items-center gap-3 text-white">
+              <svg class="w-5 h-5 text-[#137fec]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M9 12.5l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p class="text-sm font-medium">Học Tập kết hợp với AI hiệu quả</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-4 text-sm text-[#92adc9]">
+          <div class="inline-flex items-center gap-2">
+            <span class="inline-block size-5 rounded-full bg-white/5 border border-white/10 grid place-items-center">
+              <span class="block size-2 rounded-full bg-[#137fec]"></span>
+            </span>
+            Lộ trình cá nhân hoá
+          </div>
+          <div class="inline-flex items-center gap-2">
+            <span class="inline-block size-5 rounded-full bg-white/5 border border-white/10 grid place-items-center">
+              <span class="block size-2 rounded-full bg-[#137fec]"></span>
+            </span>
+            Phát âm chuẩn quốc tế
+          </div>
+          <div class="inline-flex items-center gap-2">
+            <span class="inline-block size-5 rounded-full bg-white/5 border border-white/10 grid place-items-center">
+              <span class="block size-2 rounded-full bg-[#137fec]"></span>
+            </span>
+            Theo dõi tiến độ
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Toggle password (offline) -->
+<script>
+  document.querySelectorAll('button[data-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.getAttribute('data-toggle');
+      const input = document.getElementById(id);
+      if (!input) return;
+
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+
+      // đổi icon on/off nếu có
+      const eyeOn = btn.querySelector('[data-eye-on]');
+      const eyeOff = btn.querySelector('[data-eye-off]');
+      if (eyeOn && eyeOff) {
+        eyeOn.classList.toggle('hidden', isPassword);     // đang bật text => ẩn eyeOn
+        eyeOff.classList.toggle('hidden', !isPassword);   // đang bật text => hiện eyeOff
+      }
+
+      // accessibility
+      btn.setAttribute('aria-label', isPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+    });
+  });
+</script>
+
+  <!-- main.js (your logic) -->
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

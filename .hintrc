@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "meta-viewport": "off",
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "background-color: color-mix(in srgb, oklch(37.9% 0.146 265.522) 20%, transparent)",
+          "background-color: color-mix(in srgb, oklch(39.3% 0.095 152.535) 20%, transparent)",
+          "background-color: color-mix(in srgb, oklch(39.6% 0.141 25.723) 20%, transparent)",
+          "-webkit-text-size-adjust",
+          "backdrop-filter"
+        ]
+      }
+    ],
+    "axe/forms": [
+      "default",
+      {
+        "label": "off"
+      }
+    ]
+  }
+}

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Xác thực tài khoản - Shadowing &amp; Dictation</title>
+
+  <!-- Tailwind build local (offline) -->
+  <link rel="stylesheet" href="/assets/css/output.css" />
+
+  <style>
+    :root { color-scheme: dark; }
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+
+    /* OTP focus ring mượt như ảnh mẫu */
+    .otp-input:focus{
+      box-shadow: 0 0 0 2px rgba(19,127,236,.45);
+    }
+
+    /* (Tuỳ chọn) Light mode nếu bạn cần sau này */
+    body.light{
+      color-scheme: light;
+      background:#f6f7f8;
+      color:#0a2540;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen w-full bg-[#101922] text-white antialiased overflow-x-hidden">
+  <!-- Background glow -->
+  <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0b1220] via-[#0a1322] to-[#101922]"></div>
+    <div class="absolute top-[-12%] left-[-12%] w-[520px] h-[520px] rounded-full bg-[#137fec]/20 blur-[120px] opacity-80"></div>
+    <div class="absolute bottom-[-14%] right-[-12%] w-[520px] h-[520px] rounded-full bg-[#137fec]/10 blur-[130px] opacity-80"></div>
+  </div>
+
+  <div class="relative flex min-h-screen w-full flex-col">
+    <!-- Header -->
+    <header class="flex items-center justify-between border-b border-white/5 px-6 py-4 lg:px-10 bg-[#0b1423]/50 backdrop-blur-md">
+      <div class="flex items-center gap-3 select-none">
+        <!-- nếu bạn có icon con gà thì thay ở đây -->
+        <div class="size-8 rounded-lg bg-[#137fec]/15 ring-1 ring-white/10 grid place-items-center">
+          <span class="text-[#7db5ff] font-black">S</span>
+        </div>
+        <h2 class="text-lg font-bold tracking-tight">Shadowing &amp; Dictation</h2>
+      </div>
+
+      <a class="text-sm font-medium text-slate-300/90 hover:text-white transition-colors" href="#">
+        Trợ giúp?
+      </a>
+    </header>
+
+    <!-- Main -->
+    <main class="flex-1 flex items-center justify-center p-4 sm:p-6">
+      <section class="w-full max-w-[520px]">
+        <!-- Card -->
+        <div class="w-full rounded-2xl bg-[#1c2630]/80 border border-white/10 backdrop-blur-md shadow-2xl p-6 sm:p-10 flex flex-col gap-6">
+          <!-- Icon + Title -->
+          <div class="flex flex-col items-center text-center gap-2">
+            <div class="mb-3 size-16 rounded-full bg-[#137fec]/15 ring-1 ring-[#137fec]/20 grid place-items-center">
+              <!-- ✅ icon lock PNG (offline) -->
+              <img
+                src="/assets/icons/lock.png"
+                alt="Lock"
+                class="w-8 h-8 object-contain select-none"
+                draggable="false"
+              />
+            </div>
+
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              Xác thực tài khoản
+            </h1>
+
+            <p class="text-base text-slate-300/80 leading-relaxed max-w-[360px]">
+              Vui lòng nhập mã OTP gồm 6 chữ số đã được gửi đến email
+              <span id="verify-email" class="text-white font-semibold">user@example.com</span>
+            </p>
+          </div>
+
+          <!-- Form (GIỮ ID để verify.js chạy) -->
+          <form id="verify-register-form" class="flex flex-col gap-6 w-full">
+            <!-- ✅ input gốc của bạn: giữ lại để verify.js đọc -->
+            <input type="hidden" id="verify-code" maxlength="6" />
+
+            <!-- OTP boxes -->
+            <div class="flex justify-center">
+              <fieldset class="flex gap-2 sm:gap-3">
+                <input class="otp-input otp-digit flex h-12 w-10 sm:h-14 sm:w-12 rounded-lg text-center bg-[#111a22] border border-white/10 text-xl font-bold text-white placeholder:text-slate-600 outline-none transition-all caret-[#137fec]"
+                       inputmode="numeric" maxlength="1" autocomplete="one-time-code" placeholder="-" autofocus />
+                <input class="otp-input otp-digit flex h-12 w-10 sm:h-14 sm:w-12 rounded-lg text-center bg-[#111a22] border border-white/10 text-xl font-bold text-white placeholder:text-slate-600 outline-none transition-all caret-[#137fec]"
+                       inputmode="numeric" maxlength="1" placeholder="-" />
+                <input class="otp-input otp-digit flex h-12 w-10 sm:h-14 sm:w-12 rounded-lg text-center bg-[#111a22] border border-white/10 text-xl font-bold text-white placeholder:text-slate-600 outline-none transition-all caret-[#137fec]"
+                       inputmode="numeric" maxlength="1" placeholder="-" />
+                <input class="otp-input otp-digit flex h-12 w-10 sm:h-14 sm:w-12 rounded-lg text-center bg-[#111a22] border border-white/10 text-xl font-bold text-white placeholder:text-slate-600 outline-none transition-all caret-[#137fec]"
+                       inputmode="numeric" maxlength="1" placeholder="-" />
+                <input class="otp-input otp-digit flex h-12 w-10 sm:h-14 sm:w-12 rounded-lg text-center bg-[#111a22] border border-white/10 text-xl font-bold text-white placeholder:text-slate-600 outline-none transition-all caret-[#137fec]"
+                       inputmode="numeric" maxlength="1" placeholder="-" />
+                <input class="otp-input otp-digit flex h-12 w-10 sm:h-14 sm:w-12 rounded-lg text-center bg-[#111a22] border border-white/10 text-xl font-bold text-white placeholder:text-slate-600 outline-none transition-all caret-[#137fec]"
+                       inputmode="numeric" maxlength="1" placeholder="-" />
+              </fieldset>
+            </div>
+
+            <!-- Message (GIỮ ID) -->
+            <p id="verify-message" class="min-h-[20px] text-sm text-slate-300"></p>
+
+            <!-- Submit -->
+            <button type="submit"
+              class="w-full h-12 rounded-xl bg-[#137fec] hover:bg-[#137fec]/90 text-white font-extrabold tracking-wide shadow-lg shadow-[#137fec]/25 active:scale-[0.98] transition">
+              Xác nhận →
+            </button>
+
+            <!-- Resend row (GIỮ ID btn-resend-code) -->
+            <div class="flex flex-col items-center gap-2 text-sm">
+              <div class="text-slate-300/80">
+                Bạn chưa nhận được mã?
+                <button id="btn-resend-code" type="button"
+                  class="ml-1 text-[#65a9ff] font-semibold hover:underline disabled:opacity-60 disabled:cursor-not-allowed">
+                  Gửi lại mã
+                </button>
+              </div>
+
+              <div class="w-full h-px bg-white/10"></div>
+
+              <a href="/register.html" class="flex items-center gap-2 text-slate-300 hover:text-white transition-colors">
+                ← Quay lại Đăng ký
+              </a>
+            </div>
+          </form>
+        </div>
+
+        <!-- Badge -->
+        <div class="mt-8 flex items-center justify-center">
+          <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs text-slate-300">
+            <span class="inline-block size-2 rounded-full bg-emerald-400"></span>
+            Bảo mật SSL được mã hóa đầu cuối
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ✅ UI script: tự nhảy ô + paste + ghép mã vào #verify-code (để verify.js dùng) -->
+  <script>
+    // show email from localStorage (cùng key bạn dùng trong api.js)
+    (function () {
+      const el = document.getElementById("verify-email");
+      try {
+        const email = localStorage.getItem("pending_register_email") || "";
+        if (email && el) el.textContent = email;
+      } catch {}
+    })();
+
+    (function () {
+      const hidden = document.getElementById("verify-code");
+      const inputs = Array.from(document.querySelectorAll(".otp-digit"));
+      if (!hidden || inputs.length === 0) return;
+
+      const syncHidden = () => {
+        hidden.value = inputs.map(i => (i.value || "")).join("").slice(0, 6);
+      };
+
+      const focusAt = (idx) => {
+        const i = inputs[idx];
+        if (i) i.focus();
+      };
+
+      inputs.forEach((input, index) => {
+        input.addEventListener("keydown", (e) => {
+          const key = e.key;
+
+          if (key === "Backspace") {
+            if (input.value) {
+              input.value = "";
+              syncHidden();
+              return;
+            }
+            if (index > 0) {
+              focusAt(index - 1);
+              e.preventDefault();
+            }
+            return;
+          }
+
+          if (key === "ArrowLeft") {
+            if (index > 0) focusAt(index - 1);
+            e.preventDefault();
+            return;
+          }
+
+          if (key === "ArrowRight") {
+            if (index < inputs.length - 1) focusAt(index + 1);
+            e.preventDefault();
+            return;
+          }
+        });
+
+        input.addEventListener("input", (e) => {
+          const v = (e.target.value || "").trim();
+
+          // chỉ cho nhập 1 số
+          if (!/^\d$/.test(v)) {
+            e.target.value = "";
+            syncHidden();
+            return;
+          }
+
+          e.target.value = v;
+          syncHidden();
+
+          if (index < inputs.length - 1) focusAt(index + 1);
+        });
+
+        input.addEventListener("paste", (e) => {
+          e.preventDefault();
+          const text = (e.clipboardData.getData("text") || "").replace(/\D/g, "").slice(0, 6);
+          if (!text) return;
+
+          for (let i = 0; i < inputs.length; i++) {
+            inputs[i].value = text[i] || "";
+          }
+          syncHidden();
+          const last = Math.min(text.length, inputs.length) - 1;
+          if (last >= 0) focusAt(last);
+        });
+      });
+    })();
+  </script>
+
+  <!-- ✅ script app của bạn -->
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>
